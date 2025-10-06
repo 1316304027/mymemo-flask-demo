@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-main">
+  <h1>メモを編集</h1>
+
+  {% from "_formhelpers.html" import render_field %}
+
+  <form method="post" action="{{ url_for('memo.update', memo_id=edit_id) }}" novalidate>
+    {{ form.hidden_tag() }}
+
+    {{ render_field(form.title) }}
+    {{ render_field(form.content, rows=5, cols=50) }}
+
+    <div class="form-actions" style="display:flex; gap:8px; margin-top:12px; align-items:center;">
+      {{ form.submit(class="btn btn-primary") }}
+      <a class="btn btn-outline-secondary" href="{{ url_for('memo.index') }}">戻る</a>
+      <a class="btn btn-link" href="{{ url_for('home') }}">ホームへ戻る</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

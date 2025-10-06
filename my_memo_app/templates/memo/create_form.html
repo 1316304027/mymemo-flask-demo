@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-main">
+  <h1>新メモを作成</h1>
+
+  {% from "_formhelpers.html" import render_field %}
+  <form method="POST" action="{{ url_for('memo.create') }}" novalidate>
+    {{ form.hidden_tag() }}
+
+    {# 使用 render_field 渲染 title（假设宏会显示 field.errors） #}
+    {{ render_field(form.title) }}
+
+    {# 使用 render_field 渲染 content #}
+    {{ render_field(form.content, rows=5, cols=50) }}
+
+    {# 按钮组：同一行显示 提交 / 返回列表 / 返回主页 #}
+    <div class="form-actions" style="display:flex; gap:8px; margin-top:12px; align-items:center;">
+      {{ form.submit(class="btn btn-primary") }}
+      <a class="btn btn-outline-secondary" href="{{ url_for('memo.index') }}">戻る</a>
+      <a class="btn btn-link" href="{{ url_for('home') }}">ホームへ戻る</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

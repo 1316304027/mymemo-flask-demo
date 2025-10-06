@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>メモアプリ</title>
+
+    <style>
+      /* 页面主体居中并限制宽度，避免贴左上角 */
+      .app-container {
+        max-width: 820px;
+        margin: 26px auto;    /* 上下空隙 26px，左右自动居中 */
+        padding: 12px;
+      }
+      /* 表单按钮与返回链接放一行 */
+      .form-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: 12px;
+      }
+      /* 小字体错误样式（保证提示不太占空间） */
+      .field-error { color: #c00; font-size: 0.9em; margin-top:4px; }
+    </style>
+</head>
+<body>
+
+    {% if current_user.is_authenticated %}
+        <a href="{{url_for('auth.logout')}}">ログアウト</a>
+    {% else %}
+        {# 当处于登录或注册页（auth.login / auth.register）时，不在顶栏显示登录链接，避免首页按钮和顶栏重复 #}
+        {# 未ログイン時、ただし auth の login/register ページでは表示しない #}
+        {% if request.path != '/' and request.path != url_for('auth.login') and request.path != url_for('auth.register') %}
+            <a href="{{ url_for('auth.login') }}">ログイン</a>
+        {% endif %}
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div>
+          {% for m in messages %}
+            <div style="color:blue;">{{ m }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 把所有页面的 block content 放进统一容器，解决“贴左上角”的问题 -->
+    <div class="app-container">
+      {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
