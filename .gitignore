@@ -1,0 +1,23 @@
+# Python cache / bytecode
+__pycache__/
+*.pyc
+# Virtual environments
+.venv/
+venv/
+env/
+# Environment variables
+.env
+# Local DB (do not upload sqlite)
+instance/*.sqlite
+*.sqlite
+*.db
+# IDE
+.vscode/
+.idea/
+# Migrations
+migrations/
+# Logs
+*.log
+# OS files
+.DS_Store
+Thumbs.db
